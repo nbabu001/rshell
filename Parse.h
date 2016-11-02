@@ -29,20 +29,24 @@ bool parse(string input) {
     
     //Data fields used for looping
    
-    string command = "DID NOT UPDATE COMMAND";
-    string tester;
-    string compare;
-    vector<string> args;
-    args.push_back("");
-    vector<string> placeholder(1);
+  
+    
     Connector* temp = 0;
     string type = "";
     
     while(it != toke.end()) {
+        string command = "DID NOT UPDATE COMMAND";
+        vector<string> args;
+        args.push_back("");
+        
+        string tester;
+        string compare;
+        vector<string> placeholder(1);
+        
         bool is_command_only = false;
         bool skipper = false;
         
-        cout << "one loop" << endl;
+        cout << "=================" << endl;
         //START OF THE COMMAND
         
         //Exit case
@@ -52,13 +56,15 @@ bool parse(string input) {
             return false;
         }
         
+        //strcmp((*it).c_str(), "|"))
         placeholder.at(0) = *it;
         compare = placeholder.at(0);
         
         
         
         //Or operator
-        if(compare == "||") {
+        if(compare == "|") {
+            type = "o";
             it++;
             placeholder.at(0) = *it;
             command = placeholder.at(0);
@@ -66,7 +72,8 @@ bool parse(string input) {
         }
         
         //And operator
-        else if(compare == "&&") {
+        else if(compare == "&") {
+            type = "a";
             it++;
             placeholder.at(0) = *it;
             command = placeholder.at(0);
@@ -75,13 +82,14 @@ bool parse(string input) {
         
         //Semi Operator
         else if (compare == ";") {
-            it++;
-            placeholder.at(0) = *it;
-            command = placeholder.at(0);
+            type = "s";
+            command = compare;
             cout << "Inside and" << command << endl;
+            
              
         }
         else {
+            type = "s";
             command = compare;
             cout << "Inside semi: " << command << endl;
         }
@@ -103,7 +111,7 @@ bool parse(string input) {
         
         
         //checks if its a command only
-        if (compare == "||" || compare == "&&" || compare == ";") {
+        if (compare == "|" | compare == "&" | compare == ";") {
             is_command_only = true;
         }
         
@@ -113,11 +121,36 @@ bool parse(string input) {
             //Comment checking
             if (compare ==  "#") {
                 
+                bool comment = true;
+                string check;
                 //Loop 
-                while(it != toke.end() || !strcmp((*it).c_str(), "||")  || !strcmp((*it).c_str(),  ";") || !strcmp((*it).c_str() ,  "&&")) {
+                while(comment) {
                     it++;
-                    is_command_only = true;
                     
+                    if(it == toke.end()) {
+                            is_command_only = true;
+                            comment = false;
+                            
+                    }
+                    else {
+                        
+                        placeholder.at(0) = *it;
+                        check = placeholder.at(0);
+                        
+                        if(check == "|"){
+                            is_command_only = true;
+                            comment = false;
+                        }
+                        if(check == "&"){
+                            is_command_only = true;
+                            comment = false;
+                        }
+                        if(check == ";"){
+                            is_command_only = true;
+                            comment = false;
+                        }
+                    }
+                   
                 } 
                
             }
@@ -133,17 +166,24 @@ bool parse(string input) {
                 else {
                     placeholder.at(0) = *it;
                     compare = placeholder.at(0);
-                    if (compare == "||" || compare == "&&" || compare == ";") {
+                    if (compare == "|" || compare == "&" | compare == ";") {
                         is_command_only = true;
+                        
                     }
                 }
             }
         }
         
        
-        Inputstorage input(command, args);
-        is_command_only = executecmd(input);
+        Inputstorage inputS(command, args);
+        if (type == "s") {
+            is_command_only = executecmd(inputS,args);
+        }
         
+        
+        if (type == "s" & it != toke.end()) {
+            it++;
+        }
         
     }
     
