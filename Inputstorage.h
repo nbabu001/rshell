@@ -8,29 +8,26 @@ using namespace std;
 
 
 class Inputstorage{
-    Protected:
+    protected:
         vector<string> args;
         string cmd;
         
-    Public:
-    Inputstorage(string command, vector<string> arguements)
-    :  cmd(command), args(arguements) {}
+    public:
+    Inputstorage(string command, vector<string> arguments)
+    :  cmd(command), args(arguments) { cout <<"constructed" << endl;
+        cout <<  "command is: " << command << endl;
+        cout << "arg 0: "<< args.at(0) << endl;
+        cout << "arg 1:" << args.at(1) << endl;
+    }
     
-    char* get_cmd(){
+    char*  get_cmd(){
         char * cmdpoint = new char[cmd.length() + 1];
-        strcopy(cmdpoint, cmd.c_str())
+        strcpy(cmdpoint, cmd.c_str());
         return cmdpoint;
     }
     
-    char* get_args(){
-        string temp;
-        for(int x = 0; x < args.size(); x++){
-            temp = temp + args.at(x);
-            temp = temp + " ";
-        }
-        temp = temp + "\0"
-        char *argpoint = temp.c_str();
-        return argpoint;
+    vector<string>* get_args(){
+      return &args;  
     }
 
     
