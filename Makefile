@@ -1,14 +1,7 @@
-CC = gcc
-
-CFLAGS  = -g -Wall
-
-# the build target executable:
-TARGET = main
-
-all: $(TARGET)
-
-$(TARGET): $(TARGET).c
-  $(CC) $(CFLAGS) -o $(TARGET).cpp
-
-clean:
-  $(RM) $(TARGET)
+all:
+	-mkdir -p bin 
+	g++ -std=c++11 -Wall -Werror -ansi -pedantic -o bin/rshell src/main.cpp
+	
+rshell:
+	-mkdir -p bin 
+	g++ -std=c++11 -Wall -Werror -ansi -pedantic -o bin/rshell src/main.cpp

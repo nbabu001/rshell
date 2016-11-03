@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
     // std::vector<string> test(1);
     // Inputstorage fuck(";", test);
     // bool temp = executecmd(fuck);
-    
+    cout << "TRUE: " << true << endl;
     
     while(1) {
         //print $user@host()

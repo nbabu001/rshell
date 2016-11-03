@@ -29,22 +29,23 @@ bool parse(string input) {
     
     //Data fields used for looping
    
-  
+    bool status = false;
     
-    Connector* temp = 0;
+    //Connector* temp = 0;
     string type = "";
+    string type2 = "";
     
     while(it != toke.end()) {
         string command = "DID NOT UPDATE COMMAND";
         vector<string> args;
-        args.push_back("");
+        //args.push_back("");
         
         string tester;
         string compare;
         vector<string> placeholder(1);
         
         bool is_command_only = false;
-        bool skipper = false;
+        //bool skipper = false;
         
         cout << "=================" << endl;
         //START OF THE COMMAND
@@ -52,6 +53,7 @@ bool parse(string input) {
         //Exit case
         //Automatically returns false and exits on the other end
         if(input ==  "exit") {
+            
             cout << "returned false";
             return false;
         }
@@ -111,7 +113,7 @@ bool parse(string input) {
         
         
         //checks if its a command only
-        if (compare == "|" | compare == "&" | compare == ";") {
+        if (compare == "|" || compare == "&" || compare == ";") {
             is_command_only = true;
         }
         
@@ -166,28 +168,56 @@ bool parse(string input) {
                 else {
                     placeholder.at(0) = *it;
                     compare = placeholder.at(0);
-                    if (compare == "|" || compare == "&" | compare == ";") {
+                    if (compare == "|") {
                         is_command_only = true;
+                        //type2 = "o";
                         
+                    }
+                    
+                    if (compare == "&") {
+                        is_command_only = true;
+                        //type2 = "a";
+                    }
+                    
+                    if (compare == ";") {
+                        is_command_only = true;
+                        type2 = "s";
                     }
                 }
             }
         }
         
-       
+        //Create an input storage to be executed
         Inputstorage inputS(command, args);
+        
         if (type == "s") {
-            is_command_only = executecmd(inputS,args);
+            status = executecmd(inputS);
+            cout << status << endl;
+            cout << "test" << endl;
+            type = type2;
         }
-        
-        
-        if (type == "s" & it != toke.end()) {
+        else if (type == "o") {
+            if (!status) {
+                status = executecmd(inputS);
+                cout << "test0" << endl;
+                type = type2;
+            }
+            
+        }
+        else if (type == "a") {
+            if (status) {
+                status = executecmd(inputS);
+                cout << "testa" << endl;
+                type = type2;
+            }
+        }
+        if (it != toke.end()) {
             it++;
         }
         
     }
     
-    
+    return false;
 }
 
 
