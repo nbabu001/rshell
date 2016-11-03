@@ -11,7 +11,7 @@ using namespace std;
 int main(int argc, char** argv) {
     while(1) {
         
-    //this array will hold the host info
+    this array will hold the host info
     char hostinfo[2048];
     hostinfo[2047] = '\0';
     // this char* will hold the info to user 
@@ -39,7 +39,7 @@ int main(int argc, char** argv) {
         getline(cin, str);
         if (!parse(str)) {
             // if exit is called 
-            
+            break;
         }
     }
    
