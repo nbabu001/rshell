@@ -14,10 +14,10 @@ void get_info(){
     // get login
     userlogin = getlogin();
     // get user
-    gethostname(host, 2047);
+    gethostname(hostinfo, 2047);
     int i = 0;
     //output user info
-    while(user[i] != '\0'){
+    while(userlogin[i] != '\0'){
         cout << userlogin[i];
         i++;
     }
