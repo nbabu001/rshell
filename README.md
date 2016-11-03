@@ -17,11 +17,11 @@
   
   
 #### Installation  
-$ git clone https://github.com/nbabu001/rshell.git
-$ cd rshell
-$ git checkout hw2
-$ make
-$ bin/rshell
+    $ git clone https://github.com/nbabu001/rshell.git
+    $ cd rshell
+    $ git checkout hw2
+    $ make
+    $ bin/rshell
 
     
 
