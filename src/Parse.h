@@ -17,7 +17,8 @@
 
 bool parse(string input) {
     
-    cout << "1: inside parse: " << input << endl;
+    
+    
     //String Tokenizer
     typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
     
@@ -36,10 +37,12 @@ bool parse(string input) {
     string type2 = "";
     
     while(it != toke.end()) {
+        //Test for command
         string command = "DID NOT UPDATE COMMAND";
-        vector<string> args;
-        //args.push_back("");
         
+        vector<string> args;
+        
+        //Temprorary variables
         string tester;
         string compare;
         vector<string> placeholder(1);
@@ -47,14 +50,14 @@ bool parse(string input) {
         bool is_command_only = false;
         //bool skipper = false;
         
-        cout << "=================" << endl;
+       
         //START OF THE COMMAND
         
         //Exit case
         //Automatically returns false and exits on the other end
         if(input ==  "exit") {
             
-            cout << "returned false";
+            //cout << "returned false";
             return false;
         }
         
@@ -70,30 +73,27 @@ bool parse(string input) {
             it++;
             placeholder.at(0) = *it;
             command = placeholder.at(0);
-            cout << "Inside or" << command << endl;
         }
         
         //And operator
         else if(compare == "&") {
+            
             type = "a";
             it++;
             placeholder.at(0) = *it;
             command = placeholder.at(0);
-             cout << "Inside and" << command << endl;
         }
         
         //Semi Operator
         else if (compare == ";") {
             type = "s";
             command = compare;
-            cout << "Inside and" << command << endl;
-            
-             
         }
+        
+        //Sole command
         else {
             type = "s";
             command = compare;
-            cout << "Inside semi: " << command << endl;
         }
         
         
@@ -103,11 +103,10 @@ bool parse(string input) {
             if (it != toke.end()){
                 placeholder.at(0) = *it;
                 compare = placeholder.at(0);
-                cout << "this" << endl;
             }
+            //Set if its a command only
             else {
                 is_command_only = true;
-                cout << "that" << endl;
             }
         }
         
@@ -159,7 +158,6 @@ bool parse(string input) {
             else {
                 placeholder.at(0) = *it;
                 tester = placeholder.at(0);
-                cout << "tester is: " << tester << endl;
                 args.push_back(tester);
                 it++;
                 if(it == toke.end()) {
@@ -190,16 +188,17 @@ bool parse(string input) {
         //Create an input storage to be executed
         Inputstorage inputS(command, args);
         
+        if (command == "exit") {
+            return false;
+        }
+        
         if (type == "s") {
             status = executecmd(inputS);
-            cout << status << endl;
-            cout << "test" << endl;
             type = type2;
         }
         else if (type == "o") {
             if (!status) {
                 status = executecmd(inputS);
-                cout << "test0" << endl;
                 type = type2;
             }
             
@@ -207,7 +206,6 @@ bool parse(string input) {
         else if (type == "a") {
             if (status) {
                 status = executecmd(inputS);
-                cout << "testa" << endl;
                 type = type2;
             }
         }
@@ -217,7 +215,7 @@ bool parse(string input) {
         
     }
     
-    return false;
+    return true;
 }
 
 
