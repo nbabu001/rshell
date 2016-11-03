@@ -5,6 +5,7 @@
 #include "Parse.h"
 #include "executecmd.h"
 #include "Inputstorage.h"
+#include "Userinfo.h"
 
 using namespace std;
 int main(int argc, char** argv) {
@@ -29,10 +30,12 @@ int main(int argc, char** argv) {
     // std::vector<string> test(1);
     // Inputstorage fuck(";", test);
     // bool temp = executecmd(fuck);
-    cout << "TRUE: " << true << endl;
-    
+    //cout << "TRUE: " << true << endl;
+    //get_info();
     while(1) {
+         //get_info();
         //print $user@host()
+         get_info();
         string str;
         getline(cin, str);
         if (!parse(str)) {
