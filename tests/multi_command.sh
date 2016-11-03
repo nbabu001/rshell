@@ -8,7 +8,7 @@ ls && echo hello || exit
 mkdir exit && ls & echo this is a #test || && hello this is a test
 echo run &&& ls || lss && echo hello 
 echo run ||| echo hello
-mkdir ls &&& echoo problem || echo works 
+mkdir ls &&& echoo problem || echo works && echo yes
 ls && echo dragonslayer || mkdir battleaxe
 echo run && ls && echo jump || echo fly #dhasdj
 exit
