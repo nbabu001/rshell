@@ -1,5 +1,5 @@
 ### rshell
-    The rshell we created acts as a basic shell terminal and executes basic shell commands and terminates when an exit is called.
+    The rshell we created acts as a basic shell terminal and executes basic shell commands and terminates when an exit is called. 
     
 #### Program Features
   - Basic bash commands work such as echo, ls, mkdir, pwd, etc..
@@ -23,6 +23,9 @@
     $ make
     $ bin/rshell
 
+#### Additional Comments
+    - Even though it says there is only one contributor to this repo we both coded it on cloud 9 and pushed it via that
+    - We fixed the exit command because we forgot to put in a break statement but we ddi ths a little after the assignemnt due time
     
 
 
