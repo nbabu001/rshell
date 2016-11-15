@@ -158,6 +158,16 @@ bool parse(string input) {
             else {
                 placeholder.at(0) = *it;
                 tester = placeholder.at(0);
+                if(tester == "-"){
+                    ++it;
+                    if(it != toke.end()){
+                        string str; 
+                        placeholder.at(0) = *it;
+                        str = placeholder.at(0);
+                        tester = tester + str;
+                    }
+                }
+
                 args.push_back(tester);
                 it++;
                 if(it == toke.end()) {
