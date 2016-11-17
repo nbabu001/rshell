@@ -5,6 +5,7 @@
 #include <string>
 #include "Connector.h"
 #include "Inputstorage.h"
+#include "Test.h"
 #include "executecmd.h"
 #include <boost/tokenizer.hpp>
 #include <boost/range/iterator_range.hpp>
@@ -197,30 +198,40 @@ bool parse(string input) {
         
         //Create an input storage to be executed
         Inputstorage inputS(command, args);
-        
-        if (command == "exit") {
-            return false;
+        if (command == "test" || command == "["){
+            status = test(inputS);
+            if (status) {
+                cout << "(True)" << endl;
+            }
+            else {
+                cout << "(False)" << endl;
+            }
         }
-        
-        if (type == "s") {
-            status = executecmd(inputS);
-            type = type2;
-        }
-        else if (type == "o") {
-            if (!status) {
-                status = executecmd(inputS);
-                type = type2;
+        else {
+            if (command == "exit") {
+                return false;
             }
             
-        }
-        else if (type == "a") {
-            if (status) {
+            if (type == "s") {
                 status = executecmd(inputS);
                 type = type2;
             }
-        }
-        if (it != toke.end()) {
-            it++;
+            else if (type == "o") {
+                if (!status) {
+                    status = executecmd(inputS);
+                    type = type2;
+                }
+                
+            }
+            else if (type == "a") {
+                if (status) {
+                    status = executecmd(inputS);
+                    type = type2;
+                }
+            }
+            if (it != toke.end()) {
+                it++;
+            }
         }
         
     }

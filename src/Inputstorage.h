@@ -15,7 +15,11 @@ class Inputstorage{
         
     public:
     Inputstorage(string command, vector<string> arguments)
-    :  cmd(command), args(arguments) {}
+    :  cmd(command), args(arguments) {
+        // for (unsigned int i = 0; i < args.size(); i++) {
+        //     cout << args.at(i) << endl;
+        // }
+    }
     // gets the command as a char* to a c string so it's easier to put into execvp
         char *ret_cmd(){
         char * cmdpoint = new char[cmd.length() + 1];
@@ -26,7 +30,27 @@ class Inputstorage{
     vector<string>* get_args(){
       return &args;  
     }
-
+    
+    string get_cmd() {
+        return cmd;
+    }
+    
+    string get_test() {
+        string test;
+        if (args.size() >= 1) {
+            test = args.at(0);
+        }
+        return test;
+    }
+    
+    string get_path() {
+        string path = "";
+        for (unsigned int i = 1; i < args.size(); i++) {
+            cout << args.at(i) << endl;
+            path = path + args.at(i);
+        }
+        return path;
+     }
     
 };
 #endif
