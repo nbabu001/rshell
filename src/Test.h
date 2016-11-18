@@ -16,7 +16,7 @@ bool test(Inputstorage &val) {
       struct stat s;
       string test = val.get_test();
       string path = val.get_path();
-      cout << "THIS IS THE PATH:  " << path << endl;
+      //cout << "THIS IS THE PATH:  " << path << endl;
       if(stat(path.c_str(),&s) == 0)
       {
           if (test == "-d") {
@@ -43,8 +43,5 @@ bool test(Inputstorage &val) {
           return false;
       }
       
-     
 }
-     
-     
 #endif

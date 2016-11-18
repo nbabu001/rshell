@@ -32,6 +32,7 @@ bool parse(string input) {
     //Data fields used for looping
    
     bool status = false;
+    //bool parenthesis = false;
     
     //Connector* temp = 0;
     string type = "";
@@ -49,6 +50,8 @@ bool parse(string input) {
         vector<string> placeholder(1);
         
         bool is_command_only = false;
+        status = false;
+        //parenthesis = false;
         //bool skipper = false;
         
        
@@ -67,6 +70,10 @@ bool parse(string input) {
         compare = placeholder.at(0);
         
         
+        // if(compare == "(") {
+        //     status = parenthesisParse(it, toke);
+        //     parenthesis = true;
+        // }
         
         //Or operator
         if(compare == "|") {

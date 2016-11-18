@@ -46,7 +46,7 @@ class Inputstorage{
     string get_path() {
         string path = "";
         for (unsigned int i = 1; i < args.size(); i++) {
-            cout << args.at(i) << endl;
+            //cout << args.at(i) << endl;
             path = path + args.at(i);
         }
         return path;
