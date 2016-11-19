@@ -19,3 +19,19 @@ EOL
 bin/rshell << 'EOL'
 exitt && exit || echo hello 
 EOL
+
+bin/rshell << 'EOL'
+test -e /bin/rshell || echo hello 
+EOL
+
+bin/rshell << 'EOL'
+test -e exit || echo hello 
+EOL
+
+bin/rshell << 'EOL'
+[-f exit] 
+EOL
+
+bin/rshell << 'EOL'
+[exit] 
+EOL
