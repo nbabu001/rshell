@@ -38,7 +38,6 @@ bool parse(tokenizer::iterator &it, tokenizer &toke) {
     bool status = false;
     bool parenthesis = false;
     bool pCheck = false;
-    
     //Connector* temp = 0;
     string type = "";
     string type2 = "";
@@ -55,8 +54,6 @@ bool parse(tokenizer::iterator &it, tokenizer &toke) {
         vector<string> placeholder(1);
         
         bool is_command_only = false;
-        status = false;
-        parenthesis = false;
         //bool skipper = false;
         
        
@@ -67,45 +64,40 @@ bool parse(tokenizer::iterator &it, tokenizer &toke) {
         
         
         //strcmp((*it).c_str(), "|"))
-        if (it != toke.end()) {
-            placeholder.at(0) = *it;
-            compare = placeholder.at(0);
-        }
+        placeholder.at(0) = *it;
+        compare = placeholder.at(0);
         
-        if(compare == "exit") {
+        if(compare ==  "exit") {
+            
             //cout << "returned false";
             return false;
         }
         
-        if(compare == "(") {
-            //cout << compare << endl;
+        if(compare == "("){
+            //execute everything in parenthesis first
             it++;
             status = parse(it, toke);
             parenthesis = true;
         }
         
         if (parenthesis != true) {
-        
-            if (compare == ")") {
-                it++;
-                return status;
-            }
-            
             //Or operator
             if(compare == "|") {
                 type = "o";
                 it++;
-                if (it != toke.end()) {
-                    placeholder.at(0) = *it;
-                    compare = placeholder.at(0);
+                placeholder.at(0) = *it;
+                command = placeholder.at(0);
+                
+                if(status == true && command == "(") {
+                
+                   parenthesisParse(it, toke);
+                   pCheck = true;
                 }
                 
                 if(status == false && command == "("){
-                    //call parentheses execute function
                     status = parse(it, toke);
                     pCheck = true;
                 }
-                
             }
             
             //And operator
@@ -113,44 +105,48 @@ bool parse(tokenizer::iterator &it, tokenizer &toke) {
                 
                 type = "a";
                 it++;
-                if (it != toke.end()) {
-                    placeholder.at(0) = *it;
-                    compare = placeholder.at(0);
+                placeholder.at(0) = *it;
+                command = placeholder.at(0);
+                
+                if(status == false && command == "(") {
+            
+                   parenthesisParse(it, toke);
+                   pCheck = true;
+    
                 }
                 
-                if(status == true && command == "("){
-                    //call parentheses execute function
+                if(status == true && command == "(") {
+                //call parentheses execute function
                     status = parse(it, toke);
                     pCheck = true;
                 }
+    
             }
             
             //Semi Operator
             else if (compare == ";") {
                 type = "s";
                 command = compare;
-                
                 if(command == "("){
-                    //call parentheses execute function
+                    //call parentheses function
                     status = parse(it, toke);
                     pCheck = true;
                 }
+                   
             }
             
             //Sole command
             else {
                 type = "s";
                 command = compare;
-                
                 if(command == "("){
-                    //call parentheses execute function
+                    //call parentheses function
                     status = parse(it, toke);
                     pCheck = true;
                 }
             }
             
             if (pCheck == false) {
-            
             
                 // increment the iterator
                 if (it != toke.end()) {
@@ -189,10 +185,9 @@ bool parse(tokenizer::iterator &it, tokenizer &toke) {
                                     
                             }
                             else {
-                                if (it != toke.end()) {
-                                    placeholder.at(0) = *it;
-                                    check = placeholder.at(0);
-                                }
+                                
+                                placeholder.at(0) = *it;
+                                check = placeholder.at(0);
                                 
                                 if(check == "|"){
                                     is_command_only = true;
@@ -212,10 +207,8 @@ bool parse(tokenizer::iterator &it, tokenizer &toke) {
                        
                     }
                     else {
-                        if (it != toke.end()) {
-                            placeholder.at(0) = *it;
-                            tester = placeholder.at(0);
-                        }
+                        placeholder.at(0) = *it;
+                        tester = placeholder.at(0);
                         if(tester == "-"){
                             ++it;
                             if(it != toke.end()){
@@ -225,17 +218,16 @@ bool parse(tokenizer::iterator &it, tokenizer &toke) {
                                 tester = tester + str;
                             }
                         }
-        
-                        args.push_back(tester);
+                        if (tester != "(" && tester != ")" && tester != "\"") {
+                            args.push_back(tester);
+                        }
                         it++;
                         if(it == toke.end()) {
                             is_command_only = true;
                         }
                         else {
-                            if (it != toke.end()) {
-                                placeholder.at(0) = *it;
-                                compare = placeholder.at(0);
-                            }
+                            placeholder.at(0) = *it;
+                            compare = placeholder.at(0);
                             if (compare == "|") {
                                 is_command_only = true;
                                 //type2 = "o";
@@ -255,7 +247,6 @@ bool parse(tokenizer::iterator &it, tokenizer &toke) {
                     }
                 }
                 
-                cout << "This is the command: " << command << endl;
                 //Create an input storage to be executed
                 Inputstorage inputS(command, args);
                 if (command == "test" || command == "["){
@@ -267,34 +258,32 @@ bool parse(tokenizer::iterator &it, tokenizer &toke) {
                         cout << "(False)" << endl;
                     }
                 }
-                else {
-                    if (command == "exit") {
-                        return false;
-                    }
-                    
-                    if (type == "s") {
+                if (command == "exit") {
+                    return false;
+                }
+                
+                if (type == "s") {
+                    status = executecmd(inputS);
+                    type = type2;
+                }
+                else if (type == "o") {
+                    if (!status) {
                         status = executecmd(inputS);
                         type = type2;
                     }
-                    else if (type == "o") {
-                        if (!status) {
-                            status = executecmd(inputS);
-                            type = type2;
-                        }
-                        
-                    }
-                    else if (type == "a") {
-                        if (status) {
-                            status = executecmd(inputS);
-                            type = type2;
-                        }
-                    }
-                    if (it != toke.end()) {
-                        it++;
+                    
+                }
+                else if (type == "a") {
+                    if (status) {
+                        status = executecmd(inputS);
+                        type = type2;
                     }
                 }
+                if (it != toke.end()) {
+                    it++;
+                }
+                
             }
-        
         }
     }
     
