@@ -2,4 +2,4 @@ name1= Nishanth Babu
 ucrnetid1= nbabu001
 name2= Agustin Balquin
 ucrnetid2= abalq001
-repourl= https://github.com/nbabu001/rshell/tree/hw2
+repourl= https://github.com/nbabu001/rshell.git
