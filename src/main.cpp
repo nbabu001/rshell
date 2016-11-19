@@ -12,7 +12,7 @@ using namespace std;
 int main(int argc, char** argv) {
     while(1) {
         
-    this array will hold the host info
+    // this array will hold the host info
     char hostinfo[2048];
     hostinfo[2047] = '\0';
     // this char* will hold the info to user 
