@@ -10,4 +10,8 @@ echo #dragon
 ls && echo #fh
 echo #sdhh && ls
 mkdir 
+test -f #bin
+#test -f /bin/rshell
+#[ -d /bin/]
+test #-f /bin/rshell
 EOL
