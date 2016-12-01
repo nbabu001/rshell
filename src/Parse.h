@@ -5,6 +5,7 @@
 #include <string>
 #include "Connector.h"
 #include "Inputstorage.h"
+#include "Cd.h"
 #include "Test.h"
 #include "executecmd.h"
 #include "Parenthesis.h"
@@ -214,7 +215,8 @@ bool parse(tokenizer::iterator &it, tokenizer &toke) {
                     else {
                         placeholder.at(0) = *it;
                         tester = placeholder.at(0);
-                        if(tester == "-"){
+                        if(tester == "-" && command != "cd"){
+                            cout << command << endl;
                             ++it;
                             if(it != toke.end()){
                                 string str; 
@@ -263,11 +265,16 @@ bool parse(tokenizer::iterator &it, tokenizer &toke) {
                         cout << "(False)" << endl;
                     }
                 }
+                
                 if (command == "exit") {
                     return false;
                 }
                 
-                if (type == "s") {
+                if (command == "cd") {
+                    status = cd(inputS);
+                    type = type2;
+                }
+                else if (type == "s") {
                     status = executecmd(inputS);
                     type = type2;
                 }

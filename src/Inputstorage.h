@@ -50,7 +50,19 @@ class Inputstorage{
             path = path + args.at(i);
         }
         return path;
-     }
+    }
+    
+    string get_directory() {
+        string path = "";
+        if (args.size() == 0) {
+            return path;
+        }
+        for (unsigned int i = 0; i < args.size(); i++) {
+            //cout << args.at(i) << endl;
+            path = path + args.at(i);
+        }
+        return path;
+    }
     
 };
 #endif
