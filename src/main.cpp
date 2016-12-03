@@ -34,7 +34,7 @@ int main(int argc, char** argv) {
         cout << hostinfo[x];
          x++;
      }
-    //  cout << "$ ";
+     cout << "$ ";
         cout << ":" << getenv("PWD") << "$ ";
         string str;
         getline(cin, str);
