@@ -14,4 +14,6 @@ echo cd ..
 #cd -
 cd #-
 cd ..#.
+cd exit
+exit cd -
 EOF
