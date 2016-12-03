@@ -74,6 +74,12 @@ bool parse(tokenizer::iterator &it, tokenizer &toke) {
             return false;
         }
         
+        if(compare ==  "#") {
+            
+            //cout << "returned false";
+            return true;
+        }
+        
         if(compare == ")") {
             //return if end of parenthesis
             return status;
